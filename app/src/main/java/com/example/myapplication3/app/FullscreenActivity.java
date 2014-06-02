@@ -108,6 +108,7 @@ txt1.setText(btn1.getText());
                             // controls.
                             controlsView.setVisibility(visible ? View.VISIBLE : View.GONE);
                         }
+                        
 
                         if (visible && AUTO_HIDE) {
                             // Schedule a hide().
