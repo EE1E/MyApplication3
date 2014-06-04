@@ -1,28 +1,16 @@
 package com.example.myapplication3.app;
 
-import com.example.myapplication3.app.util.SystemUiHider;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.Date;
 import android.widget.Toast;
+
+import com.example.myapplication3.app.util.SystemUiHider;
+
 import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
@@ -79,11 +67,21 @@ public class FullscreenActivity extends Activity{
         gps = new GPS(FullscreenActivity.this);
         //check if GPS enabled
         if(gps.canGetLocation()){
+            if(((gps.getLatitude()==0.0)&&(gps.getLongitude()==0.0)))
+            {
+                Toast.makeText(getApplicationContext(), "No gps, open map!!! ",
+                        Toast.LENGTH_LONG).show();
 
-            txt1.append("\n" + gps.getLatitude()); // returns latitude
-            txt1.append("\n" + gps.getLongitude()); // returns longitude
+            }
+            else
+            {
 
-            // \n is for new line
+                txt1.append("\n Lat: " + gps.getLatitude()); // returns latitude
+                txt1.append("\n Long:" + gps.getLongitude()); // returns longitude
+
+                // \n is for new line
+            }
+
 
         }else{
             // can't get location

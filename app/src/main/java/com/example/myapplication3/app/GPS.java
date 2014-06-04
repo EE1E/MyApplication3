@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by axk308 on 04/06/2014.
@@ -62,6 +63,10 @@ public class GPS extends Service implements LocationListener {
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
+
+                Toast.makeText(getApplicationContext(), "No gps!!! ",
+                        Toast.LENGTH_LONG).show();
+
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
@@ -157,7 +162,7 @@ public class GPS extends Service implements LocationListener {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle("GPS not enabled");
 
         // Setting Dialog Message
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
