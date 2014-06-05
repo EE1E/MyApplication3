@@ -67,6 +67,21 @@ public class FullscreenActivity extends Activity{
 
     }
 
+
+
+
+    //Spreadsheet
+    public void btn2clk(View v) {
+        Button btn2 = (Button) v;
+
+
+        txt1 = (TextView) findViewById(R.id.txt1);
+        txt1.setText(btn2.getText());
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        txt1.append("\n" + currentDateTimeString);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
