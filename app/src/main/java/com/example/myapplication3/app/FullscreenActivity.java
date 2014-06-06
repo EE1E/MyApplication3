@@ -1,23 +1,16 @@
 package com.example.myapplication3.app;
 
-import com.example.myapplication3.app.util.SystemUiHider;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.Date;
+import android.widget.Toast;
+
+import com.example.myapplication3.app.util.SystemUiHider;
 
 import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
@@ -56,8 +49,13 @@ public class FullscreenActivity extends Activity{
     private TextView txt1;
 
 
-    public void btn1clk(View v) {
-        Button btn1 = (Button) v;
+    // GPSTracker class
+    GPS gps;
+    Button btn1;
+
+
+    public void btn1clk(View arg0) {
+
 
 
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -65,20 +63,33 @@ public class FullscreenActivity extends Activity{
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         txt1.append("\n" + currentDateTimeString);
 
-    }
+
+        gps = new GPS(FullscreenActivity.this);
+        //check if GPS enabled
+        if(gps.canGetLocation()){
+            if(((gps.getLatitude()==0.0)&&(gps.getLongitude()==0.0)))
+            {
+                Toast.makeText(getApplicationContext(), "No gps, open map!!! ",
+                        Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+
+                txt1.append("\n Lat: " + gps.getLatitude()); // returns latitude
+                txt1.append("\n Long:" + gps.getLongitude()); // returns longitude
+
+                // \n is for new line
+            }
 
 
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
 
-
-    //Spreadsheet
-    public void btn2clk(View v) {
-        Button btn2 = (Button) v;
-
-
-        txt1 = (TextView) findViewById(R.id.txt1);
-        txt1.setText(btn2.getText());
-        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-        txt1.append("\n" + currentDateTimeString);
 
     }
 
@@ -87,44 +98,13 @@ public class FullscreenActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fullscreen);
+
+
         txt1 = (TextView) findViewById(R.id.txt1);
-        final View controlsView = findViewById(R.id.fullscreen_content_controls);
-        final View contentView = findViewById(R.id.fullscreen_content);
-
-        // Get the location manager
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        LocationListener ll = new mylocationlistener();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
-
-
+        btn1 = (Button) findViewById(R.id.btn1);
     }
 
-    class mylocationlistener implements LocationListener {
 
-        @Override
-        public void onLocationChanged(Location location) {
 
-            double pLong = location.getLatitude();
-            double pLat = location.getLatitude();
-
-            txt1.append("\n" + Double.toString(pLat));
-            txt1.append("\n" + Double.toString(pLong));
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    }
 
 }
