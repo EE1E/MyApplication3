@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="gdata-core-1.0">
+  <library name="googleformuploader">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/gdata-core-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/googleformuploader.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

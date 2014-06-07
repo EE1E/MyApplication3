@@ -8,7 +8,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.app.util.SystemUiHider;
+import com.makemyandroidapp.googleformuploader.GoogleFormUploader;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -52,6 +55,7 @@ public class FullscreenActivity extends Activity{
     // GPSTracker class
     GPS gps;
     Button btn1;
+    Button btn2;
 
 
     public void btn1clk(View arg0) {
@@ -91,7 +95,36 @@ public class FullscreenActivity extends Activity{
         }
 
 
+        GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
+        uploader.addEntry("2058901428", "ID");
+        try {
+            uploader.addEntry("755055969", URLEncoder.encode(String.valueOf(btn1.getText()),"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        uploader.addEntry("1481486247", currentDateTimeString);
+        uploader.addEntry("1963076528", String.valueOf(gps.getLatitude()));
+        uploader.addEntry("322839136", String.valueOf(gps.getLongitude()));
+        uploader.addEntry("493297396", "Location");
+        uploader.upload();
+
+
     }
+
+
+    public void btn2clk(View v) {
+
+        GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
+        uploader.addEntry("2058901428", "ID");
+        uploader.addEntry("755055969", "Category");
+        uploader.addEntry("1481486247", "Date/time");
+        uploader.addEntry("1963076528", "Latitude");
+        uploader.addEntry("322839136", "Longitude");
+        uploader.addEntry("493297396", "Location");
+        uploader.upload();
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +135,7 @@ public class FullscreenActivity extends Activity{
 
         txt1 = (TextView) findViewById(R.id.txt1);
         btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
     }
 
 

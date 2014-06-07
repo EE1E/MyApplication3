@@ -2,16 +2,10 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\axk308\AndroidStudioProjects\MyApplication3\app\build\pre-dexed\debug\support-v4-19.0.1-c17522697dd0e939e0933d1e02bcbbff55e208bb.jar"
-        jar="C:\Users\axk308\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.0.1\support-v4-19.0.1.jar"
+        dex="C:\Users\Ahmad PC\AndroidStudioProjects\MyApplication3\app\build\pre-dexed\debug\googleformuploader-00ee55a8456623a58b24f7f868a5515c67869396.jar"
+        jar="C:\Users\Ahmad PC\AndroidStudioProjects\MyApplication3\app\libs\googleformuploader.jar"
         jumboMode="false"
         revision="19.0.3"
-        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
-    <item
-        dex="C:\Users\axk308\AndroidStudioProjects\MyApplication3\app\build\pre-dexed\debug\classes-f25332492c18f3fa1c3a7ed2cdbc573d101e2573.jar"
-        jar="C:\Users\axk308\AndroidStudioProjects\MyApplication3\build\exploded-aar\com.android.support\appcompat-v7\19.0.1\classes.jar"
-        jumboMode="false"
-        revision="19.0.3"
-        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b"/>
+        sha1="c778b10662447e6f781ed4daac82e06ce29b55c4"/>
 
 </pre-dex-items>
