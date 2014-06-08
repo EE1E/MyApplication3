@@ -1,7 +1,14 @@
 package com.example.myapplication3.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,10 +17,14 @@ import android.widget.Toast;
 import com.example.myapplication3.app.util.SystemUiHider;
 import com.makemyandroidapp.googleformuploader.GoogleFormUploader;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -95,6 +106,27 @@ public class FullscreenActivity extends Activity{
         }
 
 
+
+        double latitude = gps.getLatitude();
+        double longitude = gps.getLongitude();
+        Geocoder gc = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = gc.getFromLocation(latitude, longitude, 5);
+            StringBuilder sb = new StringBuilder();
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                    sb.append(address.getAddressLine(i)).append("\n");
+                sb.append(address.getLocality()).append("\n");
+                sb.append(address.getPostalCode()).append("\n");
+                sb.append(address.getCountryName());
+                txt1.append("\n"+sb.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
         uploader.addEntry("2058901428", "ID");
         try {
@@ -109,21 +141,13 @@ public class FullscreenActivity extends Activity{
         uploader.upload();
 
 
-    }
-
-
-    public void btn2clk(View v) {
-
-        GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
-        uploader.addEntry("2058901428", "ID");
-        uploader.addEntry("755055969", "Category");
-        uploader.addEntry("1481486247", "Date/time");
-        uploader.addEntry("1963076528", "Latitude");
-        uploader.addEntry("322839136", "Longitude");
-        uploader.addEntry("493297396", "Location");
-        uploader.upload();
 
     }
+
+
+
+
+
 
 
     @Override

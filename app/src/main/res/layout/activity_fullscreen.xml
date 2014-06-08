@@ -62,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:id="@+id/btn2"
-                android:onClick="btn2clk"
                 android:clickable="true" />
 
             <Button
