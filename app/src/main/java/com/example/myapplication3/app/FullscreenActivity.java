@@ -72,7 +72,6 @@ public class FullscreenActivity extends Activity{
     public void btn1clk(View arg0) {
 
 
-
         txt1 = (TextView) findViewById(R.id.txt1);
         txt1.setText(btn1.getText());
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
@@ -81,24 +80,59 @@ public class FullscreenActivity extends Activity{
 
         gps = new GPS(FullscreenActivity.this);
         //check if GPS enabled
-        if(gps.canGetLocation()){
-            if(((gps.getLatitude()==0.0)&&(gps.getLongitude()==0.0)))
-            {
+        if (gps.canGetLocation()) {
+            if (((gps.getLatitude() == 0.0) && (gps.getLongitude() == 0.0))) {
                 Toast.makeText(getApplicationContext(), "No gps, open map!!! ",
                         Toast.LENGTH_LONG).show();
 
-            }
-            else
-            {
+            } else {
 
                 txt1.append("\n Lat: " + gps.getLatitude()); // returns latitude
                 txt1.append("\n Long:" + gps.getLongitude()); // returns longitude
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+                StringBuilder sb = new StringBuilder();
+                Geocoder gc = new Geocoder(this, Locale.getDefault());
+                try {
+                    List<Address> addresses = gc.getFromLocation(latitude, longitude, 5);
+
+                    if (addresses.size() > 0) {
+                        Address address = addresses.get(0);
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                            sb.append(address.getAddressLine(i)).append("\n");
+                        sb.append(address.getLocality()).append("\n");
+                        sb.append(address.getPostalCode()).append("\n");
+                        sb.append(address.getCountryName());
+                        sb.append(address.getExtras());
+                        sb.append(address.getFeatureName());
+                        sb.append(address.getPremises());
+                        sb.append(address.getThoroughfare());
+                        txt1.append("\n"+sb.toString());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
+                uploader.addEntry("2058901428", "ID");
+                try {
+                    uploader.addEntry("755055969", URLEncoder.encode(String.valueOf(btn1.getText()), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                uploader.addEntry("1963076528", String.valueOf(gps.getLatitude()));
+                uploader.addEntry("322839136", String.valueOf(gps.getLongitude()));
+                uploader.addEntry("493297396", " "+sb.toString());
+                uploader.upload();
+
 
                 // \n is for new line
             }
 
 
-        }else{
+        } else {
             // can't get location
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
@@ -107,42 +141,12 @@ public class FullscreenActivity extends Activity{
 
 
 
-        double latitude = gps.getLatitude();
-        double longitude = gps.getLongitude();
-        Geocoder gc = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = gc.getFromLocation(latitude, longitude, 5);
-            StringBuilder sb = new StringBuilder();
-            if (addresses.size() > 0) {
-                Address address = addresses.get(0);
-                for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
-                    sb.append(address.getAddressLine(i)).append("\n");
-                sb.append(address.getLocality()).append("\n");
-                sb.append(address.getPostalCode()).append("\n");
-                sb.append(address.getCountryName());
-                txt1.append("\n"+sb.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
-        GoogleFormUploader uploader = new GoogleFormUploader("1A2swvqW_akwg4aWL3-6FPJExVT2kpC0hb6pMOXx_PJc");
-        uploader.addEntry("2058901428", "ID");
-        try {
-            uploader.addEntry("755055969", URLEncoder.encode(String.valueOf(btn1.getText()),"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        uploader.addEntry("1481486247", currentDateTimeString);
-        uploader.addEntry("1963076528", String.valueOf(gps.getLatitude()));
-        uploader.addEntry("322839136", String.valueOf(gps.getLongitude()));
-        uploader.addEntry("493297396", "Location");
-        uploader.upload();
 
 
 
     }
+
 
 
 
