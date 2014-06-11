@@ -82,7 +82,7 @@ public class FullscreenActivity extends Activity{
         //check if GPS enabled
         if (gps.canGetLocation()) {
             if (((gps.getLatitude() == 0.0) && (gps.getLongitude() == 0.0))) {
-                Toast.makeText(getApplicationContext(), "No gps, open map!!! ",
+                Toast.makeText(getApplicationContext(), "No GPS yet, please try again",
                         Toast.LENGTH_LONG).show();
 
             } else {
@@ -101,13 +101,13 @@ public class FullscreenActivity extends Activity{
                         Address address = addresses.get(0);
                         for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
                             sb.append(address.getAddressLine(i)).append("\n");
-                        sb.append(address.getLocality()).append("\n");
-                        sb.append(address.getPostalCode()).append("\n");
-                        sb.append(address.getCountryName());
-                        sb.append(address.getExtras());
-                        sb.append(address.getFeatureName());
-                        sb.append(address.getPremises());
-                        sb.append(address.getThoroughfare());
+                        //sb.append(address.getLocality()).append("\n");
+//                        sb.append(address.getPostalCode()).append("\n");
+//                        sb.append(address.getCountryName());
+//                        sb.append(address.getExtras());
+//                        sb.append(address.getFeatureName());
+//                        sb.append(address.getPremises());
+//                        sb.append(address.getThoroughfare());
                         txt1.append("\n"+sb.toString());
                     }
                 } catch (IOException e) {
